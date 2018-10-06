@@ -9,10 +9,11 @@
 # Technologies Used
 * Node.js
 * Express.js
+* Handlebars
+* Mongoose / Mongo DB
+* Cheerio
+* Axios
 * Javascript / jQuery
-* TBD
-* TBD
-* TBD
 
 # To run the application
 Just run "npm install" in a terminal window after cloning the project. The required packages will be fetched from the package.json file and installed on your machine. Or you can see a deployed version [here.](INSERT FULL LINK HERE)
