@@ -1,4 +1,4 @@
-# newsScraper
+# Mongo Scraper
 
 * What it is
 
