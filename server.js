@@ -27,9 +27,16 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 // Make public a static folder
 app.use(express.static("public"));
+// app.use("/styles", express.static(__dirname + '/styles'));
 
 // Connect to the Mongo DB
-mongoose.connect("mongodb://localhost/unit18Populater", { useNewUrlParser: true });
+var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
+
+// need , { useNewUrlParser: true } because current URL string parser is deprecated and will be removed in a future version
+mongoose.connect(MONGODB_URI, { useNewUrlParser: true });
+
+// This is what it was in the activity gitLab Unsolved folder:
+// mongoose.connect("mongodb://localhost/unit18Populater", { useNewUrlParser: true });
 
 // Routes
 
