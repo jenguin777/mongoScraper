@@ -10,8 +10,8 @@ var mongoose = require("mongoose");
 var axios = require("axios");
 var cheerio = require("cheerio");
 
-// Require all models
-var db = require("./Models");
+// Require all models, tried renaming to lowercase models, github doesn't recognize this change so I had to change folder name back to Models in order to get the code to run
+var db = require("./models");
 
 var PORT = process.env.PORT || 3001;
 
@@ -28,6 +28,7 @@ app.use(express.json());
 // Make public a static folder
 app.use(express.static("public"));
 // app.use("/styles", express.static(__dirname + '/styles'));
+app.use("/images", express.static(__dirname + "/public"));
 
 // Connect to the Mongo DB
 var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
