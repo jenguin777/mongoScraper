@@ -1,3 +1,7 @@
+  .container {
+    background-color: rgb(224, 219, 219);
+  }
+
   .bg {
     background: url('../public/images/squareNews.jpg') no-repeat center center;
     position: fixed;
@@ -22,15 +26,12 @@
     color: black;
   }
 
-  .card {
+  /* .card {
     width: 1200px;
-  }
+  } */
 
   .card-text {
     margin: 0;
   }
 
-  #articles {
-    background-image: url("../public/images/newspaper2.jpg");
-    z-index: -1;
-  }
+  
