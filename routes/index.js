@@ -1,9 +1,8 @@
 //Dependencies
 var express = require("express");
+var router = express.Router();
 var db = require("../models");
 
-// Initialize Express
-var app = express();
 
 // Our scraping tools
 // Axios is a promised-based http library, similar to jQuery's Ajax method
@@ -12,7 +11,7 @@ var axios = require("axios");
 var cheerio = require("cheerio");
 
 // Route for getting all Articles from the db
-app.get("/articles", function(req, res) {
+router.get("/", function(req, res) {
 	// app.get("/", function(req, res) {
 	// Find all articles
 	db.Article.find({})
@@ -27,7 +26,7 @@ app.get("/articles", function(req, res) {
 });
 
 // A GET route for scraping the NPR website
-app.get("/scrape", function(req, res) {
+router.get("/scrape", function(req, res) {
 	// First, we grab the body of the html with axios
 	axios.get("https://www.npr.org/").then(function(response) {
 		// Then, we load that into cheerio and save it to $ for a shorthand selector
@@ -79,4 +78,6 @@ app.get("/scrape", function(req, res) {
 	});
 });
 
-module.exports = app;
+
+
+module.exports = router;

@@ -2,6 +2,8 @@ var express = require("express");
 var logger = require("morgan");
 var mongoose = require("mongoose");
 var exphbs = require("express-handlebars");
+var articleRoutes = require("./routes/article");
+var indexRoutes = require("./routes/index");
 
 // turn on debugging so you can see what's being sent to mongodb
 mongoose.set("debug", true);
@@ -29,15 +31,15 @@ app.use(express.static("public"));
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
 
-// Import routes and give the server access to them.
-require("./routes/index.js")(app);
-require("./routes/article.js")(app);
-
 // Connect to the Mongo DB - uncomment this once .env is setup and working
 // var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
 
 // Connect to local mongodb
 mongoose.connect("mongodb://localhost/mongoHeadlines", { useNewUrlParser: true });
+
+// Define which routes to use
+app.use("/", indexRoutes);
+app.use("/articles", articleRoutes);
 
 // Start the server
 app.listen(PORT, function() {
