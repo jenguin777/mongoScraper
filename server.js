@@ -1,17 +1,12 @@
 var express = require("express");
 var logger = require("morgan");
 var mongoose = require("mongoose");
+var exphbs = require("express-handlebars");
+
+// turn on debugging so you can see what's being sent to mongodb
+mongoose.set("debug", true);
 
 // morgan is used for automated logging of requests, responses and related data. When added as a middleware to an express/connect app, by default it should log statements to stdout showing details of: remote ip, request method, http version, response status
-
-// Our scraping tools --> moved this section to scrape in index.js
-// Axios is a promised-based http library, similar to jQuery's Ajax method
-// It works on the client and on the server
-// var axios = require("axios");
-// var cheerio = require("cheerio");
-
-// Require all models --> don't think I need this, not called in this file
-// var db = require("./models");
 
 var PORT = process.env.PORT || 3001;
 
@@ -31,8 +26,6 @@ app.use(express.json());
 app.use(express.static("public"));
 
 // Set handlebars as the default templating engine
-var exphbs = require("express-handlebars");
-
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
 
@@ -40,13 +33,10 @@ app.set("view engine", "handlebars");
 require("./routes/index.js")(app);
 require("./routes/article.js")(app);
 
-// Connect to the Mongo DB
+// Connect to the Mongo DB - uncomment this once .env is setup and working
 // var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
 
-// need , { useNewUrlParser: true } because current URL string parser is deprecated and will be removed in a future version
-// mongoose.connect(MONGODB_URI, { useNewUrlParser: true });
-
-// This is what it was in the activity gitLab Unsolved folder:
+// Connect to local mongodb
 mongoose.connect("mongodb://localhost/mongoHeadlines", { useNewUrlParser: true });
 
 // Start the server
