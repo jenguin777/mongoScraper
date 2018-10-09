@@ -45,14 +45,14 @@ mongoose.connect("mongodb://localhost/mongoHeadlines", { useNewUrlParser: true }
 
 // Routes
 
-// A GET route for scraping the echoJS website
+// A GET route for scraping the NPR website
 app.get("/scrape", function(req, res) {
 	// First, we grab the body of the html with axios
 	axios.get("https://www.npr.org/").then(function(response) {
 		// Then, we load that into cheerio and save it to $ for a shorthand selector
 		var $ = cheerio.load(response.data);
 
-		// Now, we grab every h2 within an article tag, and do the following:
+		// Now, we grab every h3 within an article tag, and do the following:
 		$("h3.title").each(function(i, element) {
 			// Save an empty result object
 			var result = {};
@@ -60,7 +60,6 @@ app.get("/scrape", function(req, res) {
 			// var title = $(element).parent().text();
 			// var link = $(element).parent("a").attr("href");
 			// var teaser = $(element).parent("a").siblings("a").children("p").text();
-
 
 			// Add the text and href of every link, and the teaser, and save them as properties of the result object
 			result.title = $(this)

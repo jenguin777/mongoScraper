@@ -14,17 +14,16 @@
   </div>
 
   <br>
-
-  <div class="card"> {{#each articles}}
-    <div class="card-header">
-        <h3><a class="article-link" target="_blank" rel="noopener noreferrer" href="https://www.nytimes.com/2018/10/03/technology/priyanka-chopra-tech-investor.html">Priyanka Chopra Is a Tech Investor, Too</a><a class="btn mt-auto btn-light btn-outline-dark float-right save">Save Article</a></h3>
-      <h5 class="card-title">{{this.title}}</h5>
+  {{#each articles}}
+    <div class="card">
+      <div class="card-header">
+          <h3><a class="article-link" target="_blank" rel="noopener noreferrer" href="{{this.link}}">{{this.title}}</a><a class="btn mt-auto btn-light btn-outline-dark float-right save">Save Article</a></h3>
+      </div>
+      <div class="card-body flex-column">
+        <p class="card-text">{{this.teaser}}</p>
+      </div>
     </div>
-    <div class="card-body flex-column">
-      <p class="card-text">{{this.link}}</p>
-    </div>
-    {{/each}}
-  </div>
+  {{/each}}
   
   <script src="app.js"></script>
 

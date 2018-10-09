@@ -15,7 +15,7 @@
 
     <br>
 
-    <!-- bootstrap modal -->
+    <!-- Modal #1 bootstrap modal -->
 
     <!-- Button trigger modal -->
     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
@@ -44,7 +44,7 @@
         </div>
     </div>
 
-    <!-- Jen Modal -->
+    <!-- Modal #2 - Jen Modal -->
     <div class="modal fade" id="myModal">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -60,7 +60,7 @@
         </div>
     </div>
 
-    <!--W3 Schools Modal -->
+    <!--Modal #3 - W3 Schools Modal -->
     <div class="modal fade" id="myModal">
         <div class="modal-dialog">
 
@@ -80,16 +80,22 @@
             </div>
         </div>
     </div>
+ 
+    {{#each articles}}
+        <div class="card">
+            <div class="card-header">
+                <h3><a class="article-link" target="_blank" rel="noopener noreferrer" href="{{this.link}}">{{this.title}}</a>
+                
+                <a class="btn mt-auto btn-light btn-outline-dark float-right save">Save Article</a></h3>
 
-    <div class="card"> {{#each articles}}
-        <div class="card-header">
-            <button type="button" class="btn mt-auto btn-light btn-outline-dark float-right" data-toggle="modal" data-target="#myModal">Bootstrap Open Modal</button>
-    
-            <a href="#" class="btn mt-auto btn-light btn-outline-dark float-right" data-toggle="modal" data-target="#myModal">Article Notes</a>
+                <button type="button" class="btn mt-auto btn-light btn-outline-dark float-right" data-toggle="modal" data-target="#myModal">Bootstrap Open Modal</button>
+        
+                <a href="#" class="btn mt-auto btn-light btn-outline-dark float-right" data-toggle="modal" data-target="#myModal">Article Notes</a>
 
-            <h5 class="card-title">{{this.title}}</h5>
+                <h5 class="card-title">{{this.title}}</h5>
+            </div>
+            <div class="card-body flex-column">
+                <p class="card-text">{{this.teaser}}</p>
+            </div>
         </div>
-        <div class="card-body flex-column">
-            <p class="card-text">{{this.link}}</p>
-        </div>
-    </div>
+    {{/each}}
