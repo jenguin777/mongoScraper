@@ -12,7 +12,7 @@
 * Handlebars - html templating engine
 * Mongoose (Mongo DB) - define schema, create custom methods to fetch data, create relationships between collections (tables)
 * Cheerio- scrapes articles from https://www.npr.org/
-* Axios - 
+* Axios - a promised-based http library, similar to jQuery's Ajax library. It works on the client and on the server.
 * Morgan - express middleware used for automated logging of requests, responses and related data to stdout (i.e., logs remote ip, request method, http version, response status, etc.). 
 
 # To run the application
