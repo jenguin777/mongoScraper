@@ -15,16 +15,16 @@
 
   <br>
   {{#each articles}}
-    <div class="card">
-      <div class="card-header">
-          <h3><a class="article-link" target="_blank" rel="noopener noreferrer" href="{{this.link}}">{{this.title}}</a><a class="btn mt-auto btn-light btn-outline-dark float-right save">Save Article</a></h3>
+    {{#unless saved}}
+      <div class="card">
+        <div class="card-header">
+            <h3><a class="article-link" target="_blank" rel="noopener noreferrer" href="{{this.link}}">{{this.title}}</a><a class="btn mt-auto btn-light btn-outline-dark float-right save">Save Article</a></h3>
+        </div>
+        <div class="card-body flex-column">
+          <p class="card-text">{{this.teaser}}</p>
+        </div>
       </div>
-      <div class="card-body flex-column">
-        <p class="card-text">{{this.teaser}}</p>
-      </div>
-    </div>
+    {{/unless}}
   {{/each}}
-  
-  <script src="app.js"></script>
 
 </div>
