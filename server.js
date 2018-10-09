@@ -78,12 +78,20 @@ app.get("/scrape", function(req, res) {
 			db.Article.create(result)
 				.then(function(dbArticle) {
 					// View the added result in the console
-					console.log(dbArticle);
+					console.log("This is the created dbArticle" + dbArticle);
 				})
 				.catch(function(err) {
 					// If an error occurred, send it to the client
-					return res.json(err);
+					return res.json(err); // this row is causing UnhandledPromiseRejectionWarning: Error: Can't set headers after they are sent.
 				});
+		// });
+		// }).then(function() {
+		// 	// View the added result in the console
+		// 	console.log("This is the promise and catch Jen added");
+		// })
+		}).catch(function(err) {
+			// If an error occurred, send it to the client
+			return res.json(err);
 		});
 
 		// If we were able to successfully scrape and save an Article, send a message to the client
@@ -91,15 +99,41 @@ app.get("/scrape", function(req, res) {
 	});
 });
 
+// db.Burger.findAll({}).then(function(results){
+// 	// results are available to us inside the .then
+	
+// 	res.render("index", { burgers: results });
+	
+// }).catch(function(error) {
+// 	throw error;
+// }); 
+
+
 // Route for getting all Articles from the db
 app.get("/articles", function(req, res) {
 	// TODO: Finish the route so it grabs all of the articles
 	db.Article.find({})
 		.then(function(article) {
-			res.json(article); 
+			// res.json(article);
+			res.render("index", { articles: article });
 		})
 		.catch(function(err) {
-			res.json(err);
+			// res.json(err);
+			throw err;
+		});
+});
+
+// Route for getting the saved articles - WIP
+app.get("/savedArticles", function(req, res) {
+	// TODO: Finish the route so it grabs all of the articles
+	db.Article.find({})
+		.then(function(article) {
+			// res.json(article);
+			res.render("index", { articles: article });
+		})
+		.catch(function(err) {
+			// res.json(err);
+			throw err;
 		});
 });
 
