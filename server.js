@@ -10,7 +10,7 @@ var mongoose = require("mongoose");
 var axios = require("axios");
 var cheerio = require("cheerio");
 
-// Require all models, tried renaming to lowercase models, github doesn't recognize this change so I had to change folder name back to Models in order to get the code to run
+// Require all models
 var db = require("./models");
 
 var PORT = process.env.PORT || 3001;
@@ -27,39 +27,53 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 // Make public a static folder
 app.use(express.static("public"));
-// app.use("/styles", express.static(__dirname + '/styles'));
-app.use("/images", express.static(__dirname + "/public"));
+
+// Set handlebars as the default templating engine
+var exphbs = require("express-handlebars");
+
+app.engine("handlebars", exphbs({ defaultLayout: "main" }));
+app.set("view engine", "handlebars");
 
 // Connect to the Mongo DB
-var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
+// var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
 
 // need , { useNewUrlParser: true } because current URL string parser is deprecated and will be removed in a future version
-mongoose.connect(MONGODB_URI, { useNewUrlParser: true });
+// mongoose.connect(MONGODB_URI, { useNewUrlParser: true });
 
 // This is what it was in the activity gitLab Unsolved folder:
-// mongoose.connect("mongodb://localhost/unit18Populater", { useNewUrlParser: true });
+mongoose.connect("mongodb://localhost/mongoHeadlines", { useNewUrlParser: true });
 
 // Routes
 
 // A GET route for scraping the echoJS website
 app.get("/scrape", function(req, res) {
 	// First, we grab the body of the html with axios
-	axios.get("http://www.echojs.com/").then(function(response) {
+	axios.get("https://www.npr.org/").then(function(response) {
 		// Then, we load that into cheerio and save it to $ for a shorthand selector
 		var $ = cheerio.load(response.data);
 
 		// Now, we grab every h2 within an article tag, and do the following:
-		$("article h2").each(function(i, element) {
+		$("h3.title").each(function(i, element) {
 			// Save an empty result object
 			var result = {};
 
-			// Add the text and href of every link, and save them as properties of the result object
+			// var title = $(element).parent().text();
+			// var link = $(element).parent("a").attr("href");
+			// var teaser = $(element).parent("a").siblings("a").children("p").text();
+
+
+			// Add the text and href of every link, and the teaser, and save them as properties of the result object
 			result.title = $(this)
-				.children("a")
+				.parent("a")
 				.text();
 			result.link = $(this)
-				.children("a")
+				.parent("a")
 				.attr("href");
+			result.teaser = $(this)
+				.parent("a")
+				.siblings("a")
+				.children("p")
+				.text();
 
 			// Create a new Article using the `result` object built from scraping
 			db.Article.create(result)
@@ -81,18 +95,18 @@ app.get("/scrape", function(req, res) {
 // Route for getting all Articles from the db
 app.get("/articles", function(req, res) {
 	// TODO: Finish the route so it grabs all of the articles
-	db.Article.find({}).then(function(article) {
-		res.json(article); 
-	}).catch(function(err) {
-		res.json(err);
-	});
+	db.Article.find({})
+		.then(function(article) {
+			res.json(article); 
+		})
+		.catch(function(err) {
+			res.json(err);
+		});
 });
 
 // Route for grabbing a specific Article by id, populate it with it's note
 app.get("/articles/:id", function(req, res) {
-	// TODO
-	// ====
-	// Finish the route so it finds one article using the req.params.id,
+	// Find one article using the req.params.id,
 	// and run the populate method with "note",
 	// then responds with the article with the note included
 	db.Article.findOne(
@@ -101,9 +115,10 @@ app.get("/articles/:id", function(req, res) {
 			_id: req.params.id
 		})
 		.populate("note")
-		.then(function(article) {
-			res.json(article); 
-		}).catch(function(err) {
+		.then(function(dbArticle) {
+			res.json(dbArticle); 
+		})
+		.catch(function(err) {
 			res.json(err);
 		});
 });
@@ -116,20 +131,20 @@ app.post("/articles/:id", function(req, res) {
 	// then find an article from the req.params.id
 	// and update it's "note" property with the _id of the new note
 	db.Note.create(req.body)
-		.then(function(newNote) {
+		.then(function(dbNote) {
 			return db.Article.findOneAndUpdate({
 				_id: req.params.id
 			},
 			{
-				note: newNote._id
+				note: dbNote._id
 			},
 			{
 				new: true
 			}
 			);
 		})
-		.then(function(article){
-			res.json(article);
+		.then(function(dbArticle){
+			res.json(dbArticle);
 		})
 		.catch(function(err) {
 			res.json(err);
