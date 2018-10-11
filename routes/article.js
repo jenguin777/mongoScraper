@@ -32,9 +32,11 @@ router.get("/articles/saved/:id", function(req,res) {
 		})
 		.then(function(dbArticle) {
 			// refetch after save
+			// res.text("successful");
 			res.redirect("/");
 		}) 
 		.catch(function(err) {
+			console.log(err);
 			res.json(err);
 		});
 });

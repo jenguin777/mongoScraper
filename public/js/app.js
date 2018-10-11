@@ -17,13 +17,13 @@ $(document).ready(function() {
 	$("#scrape").on("click", function (event){
 		event.preventDefault();
 		$.ajax({
-		  url: "/scrape/",
-		  type: "GET",
-		  success: function (response) {
+			url: "/scrape/",
+			type: "GET",
+			success: function (response) {
 				window.location.href = "/";
-		  }
+			}
 		});
-	  });//end of #scrape click event
+	});//end of #scrape click event
 
 	// click event to save an article
 	$(document).on("click", ".save", function (e) {
@@ -31,6 +31,7 @@ $(document).ready(function() {
 		$.ajax({
 			url: "/articles/saved/" + articleId,
 			type: "GET",
+			// dataType: "json",
 			success: function (response) {
 				window.location.href = "/";
 			},

@@ -34,10 +34,13 @@ app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
 
 // Connect to the Mongo DB - uncomment this once .env is setup and working
-// var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
+var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
+
+// mongoose.connect(MONGODB_URI);
+mongoose.connect(MONGODB_URI,{ useNewUrlParser: true });
 
 // Connect to local mongodb
-mongoose.connect("mongodb://localhost/mongoHeadlines", { useNewUrlParser: true });
+// mongoose.connect("mongodb://localhost/mongoHeadlines", { useNewUrlParser: true });
 
 // Define which routes to use
 app.use("/", indexRoutes);
