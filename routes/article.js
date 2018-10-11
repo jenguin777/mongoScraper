@@ -3,36 +3,37 @@ var express = require("express");
 var router = express.Router();
 var db = require("../models");
 
-// Route for getting all Articles from the db
-router.get("/saved", function(req, res) {
-	// app.get("/", function(req, res) {
-	// Find all articles
+// Route for displaying all saved articles from the db
+router.get("/articles/saved/", function(req, res) {
 	db.Article.find({saved: true})
 		.then(function(article) {
 			// res.json(article);
+			console.log("res" + res);
 			res.render("savedArticles", { articles: article });
 		})
 		.catch(function(err) {
-			// res.json(err);
-			throw err;
+			res.json(err);
+			// throw err;
 		});
 });
 
 // Route for updating the article's saved status
-// db.Article.update(req, res) {}
-// 	{
-// 		// Using the id in the url
-// 		_id: req.params.id
-// 	},
-// 	{
-// 		saved: true
-// 	}).then(function(dbArticle){
-// 		res.send("updated successfully");
-// 	}).catch(function(err) {
-// 		res.json(err);
-// 	});
-
-
+router.get("/articles/saved/:id", function(req,res) {
+	db.Article.update(
+		{
+			_id: req.params.id
+		},
+		{	
+			saved: true
+		})
+		.then(function(article) {
+			res.redirect("/articles/saved/");
+		}) 
+		.catch(function(err) {
+			res.json(err);
+		});
+});
+  
 // Route for grabbing a specific Article by id, populate it with it's note
 router.get("/articles/:id", function(req, res) {
 	// Find one article using the req.params.id,
@@ -59,16 +60,16 @@ router.post("/articles/:id", function(req, res) {
 	// and update it's "note" property with the _id of the new note
 	db.Note.create(req.body)
 		.then(function(dbNote) {
-			return db.Article.findOneAndUpdate({
-				_id: req.params.id
-			},
-			{
-				note: dbNote._id
-			},
-			{
-				new: true
-			}
-			);
+			return db.Article.findOneAndUpdate(
+				{
+					_id: req.params.id
+				},
+				{
+					note: dbNote._id
+				},
+				{
+					new: true
+				});
 		})
 		.then(function(dbArticle){
 			res.json(dbArticle);
@@ -76,6 +77,17 @@ router.post("/articles/:id", function(req, res) {
 		.catch(function(err) {
 			res.json(err);
 		});
+});
+
+//delete route to remove a single article from savedArticles
+router.delete("/deleteArticle/:id", function(req,res){
+	db.Article.remove({_id: req.params.id})
+		.then(function(dbArticle) {
+			res.json(dbArticle);
+		}) 
+		.catch(function(err) {
+			res.json(err);
+		});  
 });
 
 module.exports = router;

@@ -25,6 +25,20 @@ router.get("/", function(req, res) {
 		});
 });
 
+// Route for displaying all saved articles from the db
+router.get("/articles/saved/", function(req, res) {
+	db.Article.find({saved: true})
+		.then(function(article) {
+			// res.json(article);
+			console.log("res" + res);
+			res.render("savedArticles", { articles: article });
+		})
+		.catch(function(err) {
+			res.json(err);
+			// throw err;
+		});
+});
+
 // A GET route for scraping the NPR website
 router.get("/scrape", function(req, res) {
 	// First, we grab the body of the html with axios
@@ -64,20 +78,41 @@ router.get("/scrape", function(req, res) {
 					// If an error occurred, send it to the client
 					return res.json(err); // this row is causing UnhandledPromiseRejectionWarning: Error: Can't set headers after they are sent.
 				});
-		// });
-		// }).then(function() {
-		// 	console.log("This is the promise and catch Jen added");
 		});
-		// }).catch(function(err) {
-		// 	// If an error occurred, send it to the client
-		// 	return res.json(err);
-		// });
 
 		// If we were able to successfully scrape and save an Article, send a message to the client
 		res.send("Scrape Complete");
 	});
 });
 
+//delete route to remove a single article from index
+router.delete("/deleteArticle/:id", function(req,res){
+	db.Article.remove({_id: req.params.id})
+		.then(function(dbArticle) {
+			res.json(dbArticle);
+		}) 
+		.catch(function(err) {
+			res.json(err);
+		});  
+});
 
+// Clear the DB
+router.get("/clear-articles", function(req, res) {
+	// Remove every note from the notes collection
+	db.Article.remove({}, function(error, response) {
+		// Log any errors to the console
+		if (error) {
+			console.log(error);
+			res.send(error);
+		}
+		else {
+		// Otherwise, send the mongojs response to the browser
+		// This will fire off the success function of the ajax request
+			console.log(response);
+			res.send(response);
+		}
+	});
+});
+  
 
 module.exports = router;

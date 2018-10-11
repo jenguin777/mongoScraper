@@ -4,6 +4,7 @@ var mongoose = require("mongoose");
 var exphbs = require("express-handlebars");
 var articleRoutes = require("./routes/article");
 var indexRoutes = require("./routes/index");
+var path = require("path");
 
 // turn on debugging so you can see what's being sent to mongodb
 mongoose.set("debug", true);
@@ -25,7 +26,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 // Make public a static folder
-app.use(express.static("public"));
+// app.use(express.static("public"));
+app.use(express.static(path.join(__dirname, "/public")));
 
 // Set handlebars as the default templating engine
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));

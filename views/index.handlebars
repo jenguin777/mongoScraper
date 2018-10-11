@@ -14,9 +14,10 @@
   </div>
 
   <br>
+  <div class="filler"></div>
   {{#each articles}}
     {{#unless saved}}
-      <div class="card">
+      <div class="card" id="results">
         <div class="card-header">
             <h3><a class="article-link" target="_blank" rel="noopener noreferrer" href="{{this.link}}">{{this.title}}</a><a class="btn mt-auto btn-light btn-outline-dark float-right save" data-id="{{this._id}}">Save Article</a></h3>
         </div>
