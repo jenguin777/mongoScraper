@@ -14,26 +14,29 @@ $(document).ready(function() {
 	// Begin client side js
   
 	//click event to scrape new articles
-	$('#scrape').on('click', function (event){
+	$("#scrape").on("click", function (event){
 		event.preventDefault();
 		$.ajax({
-		  url: '/scrape/',
-		  type: 'GET',
+		  url: "/scrape/",
+		  type: "GET",
 		  success: function (response) {
-			window.location.href = '/';
+				window.location.href = "/";
 		  }
 		});
 	  });//end of #scrape click event
 
-	//click event to save an article
-	$(document).on('click', '.save', function (e) {
-		let articleId = $(this).data('id');
+	// click event to save an article
+	$(document).on("click", ".save", function (e) {
+		var articleId = $(this).attr("data-id");
 		$.ajax({
-		url: '/articles/saved/' + this.articleId,
-		type: 'GET',
-		success: function (response) {
-			window.location.href = '/articles/saved';
-		}
+			url: "/articles/saved/" + articleId,
+			type: "GET",
+			success: function (response) {
+				window.location.href = "/";
+			},
+			error: function (error) {
+				console.log("error" + JSON.stringify(error));
+			}
 		});
 	});
 
@@ -47,7 +50,7 @@ $(document).ready(function() {
 			// On a successful call, clear the #results section
 			success: function(response) {
 				$("#results").empty();
-				window.location.href = '/';
+				window.location.href = "/";
 			}
 		});
 	});

@@ -17,6 +17,10 @@ router.get("/articles/saved/", function(req, res) {
 		});
 });
 
+// I do not understand why this route is not found
+// GET /articles/saved/5bbf2d629acfbc3080212e92 
+// GET /articles/saved/5bbf2d629acfbc3080212e90
+
 // Route for updating the article's saved status
 router.get("/articles/saved/:id", function(req,res) {
 	db.Article.update(
@@ -26,8 +30,9 @@ router.get("/articles/saved/:id", function(req,res) {
 		{	
 			saved: true
 		})
-		.then(function(article) {
-			res.redirect("/articles/saved/");
+		.then(function(dbArticle) {
+			// refetch after save
+			res.redirect("/");
 		}) 
 		.catch(function(err) {
 			res.json(err);
