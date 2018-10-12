@@ -2,7 +2,7 @@
 
 * a web app that lets users view and leave comments on the latest articles displayed at [NPR's website](https://www.npr.org/). 
 
-* Whenever a user visits the site, the app scrapes stories and display them for the user. Each scraped article is saved to a Mongo  database. The app scrapes and displays the following information for each article:
+* Whenever a user visits the site, the app scrapes stories and display them for the user. Each scraped article, and its corresponding notes, is saved to a Mongo  database. The app scrapes and displays the following information for each article:
 
    * Headline - the title of the article
 
