@@ -28,9 +28,10 @@ $(document).ready(function() {
 	// click event to save an article
 	$(document).on("click", ".save", function (e) {
 		var articleId = $(this).attr("data-id");
+		console.log("Save button is clicked " + "articleID: " + articleId);
 		$.ajax({
-			url: "/articles/saved/" + articleId,
-			type: "GET",
+			url: "/articles/save-article/" + articleId,
+			type: "POST",
 			// dataType: "json",
 			success: function (response) {
 				window.location.href = "/";

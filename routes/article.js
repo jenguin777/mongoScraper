@@ -17,27 +17,36 @@ router.get("/articles/saved/", function(req, res) {
 		});
 });
 
+// Alper's example:
+// db.Headline.findOneAndUpdate({ _id: req.params.id }, { $set: req.body }, { new: true }).then(function(dbHeadline) {
+// 	res.json(dbHeadline);
+//   });
+
+
 // I do not understand why this route is not found
 // GET /articles/saved/5bbf2d629acfbc3080212e92 
 // GET /articles/saved/5bbf2d629acfbc3080212e90
 
 // Route for updating the article's saved status
-router.get("/articles/saved/:id", function(req,res) {
-	db.Article.update(
+router.post("/save-article/:id", function(req,res) {
+	console.log("This saved route is being hit");
+	console.log("req.params.id" + req.params.id);
+	db.Article.findOneAndUpdate(
 		{
 			_id: req.params.id
 		},
 		{	
-			saved: true
+			$set: {saved: true}
 		})
 		.then(function(dbArticle) {
 			// refetch after save
-			// res.text("successful");
-			res.redirect("/");
+			res.json(dbArticle);
+			// res.redirect("/");
 		}) 
 		.catch(function(err) {
-			console.log(err);
-			res.json(err);
+			console.log("err" + err);
+			res.writeContinue(err);
+			// res.json(err);
 		});
 });
   
@@ -61,7 +70,7 @@ router.get("/articles/:id", function(req, res) {
 });
 
 // Route for saving/updating an Article's associated Note
-router.post("/articles/:id", function(req, res) {
+router.post("add-note/:id", function(req, res) {
 	// save the new note that gets posted to the Notes collection
 	// then find an article from the req.params.id
 	// and update it's "note" property with the _id of the new note

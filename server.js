@@ -46,6 +46,7 @@ mongoose.connect(MONGODB_URI,{ useNewUrlParser: true });
 app.use("/", indexRoutes);
 app.use("/articles", articleRoutes);
 
+
 // Start the server
 app.listen(PORT, function() {
 	console.log("App running on port " + PORT + "!");
