@@ -30,4 +30,6 @@
     margin: 0;
   }
 
-  
+  .delete-from-saved {
+    margin-right: 14px;
+  }

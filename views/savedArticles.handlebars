@@ -15,15 +15,8 @@
 
     <br>
 
-    <!-- Modal #1 bootstrap modal -->
-
-    <!-- Button trigger modal -->
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-        Launch demo modal
-    </button>
-
     <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    <div class="modal fade" id="notesModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -43,43 +36,6 @@
             </div>
         </div>
     </div>
-
-    <!-- Modal #2 - Jen Modal -->
-    <div class="modal fade" id="myModal">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <div class="modal-title"></div>
-                </div>
-                <div class="modal-body">
-                    <p id="note">Enter Notes</p>
-                    <div class="input"></div>
-                </div>
-
-            </div>
-        </div>
-    </div>
-
-    <!--Modal #3 - W3 Schools Modal -->
-    <div class="modal fade" id="myModal">
-        <div class="modal-dialog">
-
-            <!-- Modal content-->
-            <div class="modal-content">
-                <div class="modal-header">
-
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Modal Header</h4>
-                </div>
-                <div class="modal-body">
-                    <p>Some text in the modal.</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
  
     {{#each articles}}
         <div class="card">
@@ -88,9 +44,12 @@
                 
                 <a class="btn mt-auto btn-light btn-outline-dark float-right save" data-id="{{this._id}}>Save Article</a></h3>
 
-                <button type="button" class="btn mt-auto btn-light btn-outline-dark float-right" data-toggle="modal" data-target="#myModal">Bootstrap Open Modal</button>
+                <!-- Button trigger modal -->
+                <button type="button" class="btn mt-auto btn-light btn-outline-dark float-right" data-toggle="modal" data-target="#notesModal">
+                    Article Notes
+                </button>
         
-                <a class="btn mt-auto btn-light btn-outline-dark float-right delete-from-saved" data-id="{{this._id}}">Delete from Saved</a></h3>
+                <a class="btn mt-auto btn-light btn-outline-dark float-right delete-from-saved" data-id="{{this._id}}">Unsave</a></h3>
 
             </div>
             <div class="card-body flex-column">
