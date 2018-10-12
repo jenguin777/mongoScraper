@@ -1,10 +1,14 @@
 # Mongo Scraper
 
-* What it is
+* a web app that lets users view and leave comments on the latest articles displayed at [NPR's website] (https://www.npr.org/). 
 
-* What problem it solves
+* Whenever a user visits the site, the app scrapes stories and display them for the user. Each scraped article is saved to a Mongo  database. The app scrapes and displays the following information for each article:
 
-* Further details about what it does
+   * Headline - the title of the article
+
+   * Summary - a short summary of the article
+
+   * URL - the url to the original article
 
 # Technologies Used
 * Node.js - open-source, cross-platform JavaScript run-time environment that executes JavaScript code outside of a browser
