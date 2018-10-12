@@ -10,36 +10,30 @@ var db = require("../models");
 var axios = require("axios");
 var cheerio = require("cheerio");
 
-// Route for getting all Articles from the db
+// Route for getting 20 articles from the db - need to revisit this logic...we need to stop somewhere but this may not be the best way to handle this
 router.get("/", function(req, res) {
-	// app.get("/", function(req, res) {
-	// Find all articles
-	db.Article.find({})
+	db.Article.find({}).sort({created: -1}).limit(20).populate("note")
 		.then(function(article) {
-			// res.json(article);
 			res.render("index", { articles: article });
 		})
 		.catch(function(err) {
-			// res.json(err);
-			throw err;
+			res.writeContinue(err);
 		});
 });
 
-// Route for displaying all saved articles from the db
+// Route for displaying all 20 saved articles, along with their notes, from the db (Saved Articles link)
 router.get("/articles/saved/", function(req, res) {
-	db.Article.find({saved: true})
+	db.Article.find({saved: true}).sort({created: -1}).limit(20).populate("note")
 		.then(function(article) {
-			// res.json(article);
-			console.log("res" + res);
+			
 			res.render("savedArticles", { articles: article });
 		})
 		.catch(function(err) {
-			res.json(err);
-			// throw err;
+			res.writeContinue(err);
 		});
 });
 
-// A GET route for scraping the NPR website
+// Route for scraping the NPR website (Scrape New Articles button)
 router.get("/scrape", function(req, res) {
 	// First, we grab the body of the html with axios
 	axios.get("https://www.npr.org/").then(function(response) {
@@ -76,7 +70,7 @@ router.get("/scrape", function(req, res) {
 				})
 				.catch(function(err) {
 					// If an error occurred, send it to the client
-					return res.json(err); // this row is causing UnhandledPromiseRejectionWarning: Error: Can't set headers after they are sent.
+					res.writeContinue(err);
 				});
 		});
 
@@ -92,7 +86,7 @@ router.delete("/deleteArticle/:id", function(req,res){
 			res.json(dbArticle);
 		}) 
 		.catch(function(err) {
-			res.json(err);
+			res.writeContinue(err);
 		});  
 });
 
@@ -102,8 +96,7 @@ router.get("/clear-articles", function(req, res) {
 	db.Article.remove({}, function(error, response) {
 		// Log any errors to the console
 		if (error) {
-			console.log(error);
-			res.send(error);
+			res.writeContinue(err);
 		}
 		else {
 		// Otherwise, send the mongojs response to the browser

@@ -11,9 +11,11 @@ $(document).ready(function() {
 		parallax();
 	});
 
-	// Begin client side js
+// Begin client side js
   
-	//click event to scrape new articles
+//-----------------------ARTICLES-----------------------//
+
+	// click event to scrape new articles
 	$("#scrape").on("click", function (event){
 		event.preventDefault();
 		$.ajax({
@@ -23,14 +25,31 @@ $(document).ready(function() {
 				window.location.href = "/";
 			}
 		});
-	});//end of #scrape click event
+	});
 
 	// click event to save an article
-	$(document).on("click", ".save", function (e) {
+	$(document).on("click", ".save", function (event) {
 		var articleId = $(this).attr("data-id");
 		console.log("Save button is clicked " + "articleID: " + articleId);
 		$.ajax({
 			url: "/articles/save-article/" + articleId,
+			type: "POST",
+			// dataType: "json",
+			success: function (response) {
+				window.location.href = "/";
+			},
+			error: function (error) {
+				console.log("error" + JSON.stringify(error));
+			}
+		});
+	});
+
+	// click event to remove an article from Saved
+	$(document).on("click", ".delete-from-saved", function (event) {
+		var articleId = $(this).attr("data-id");
+		console.log("Save button is clicked " + "articleID: " + articleId);
+		$.ajax({
+			url: "/articles/delete-from-saved/" + articleId,
 			type: "POST",
 			// dataType: "json",
 			success: function (response) {
@@ -56,8 +75,5 @@ $(document).ready(function() {
 			}
 		});
 	});
-  
-
-
 
 });  

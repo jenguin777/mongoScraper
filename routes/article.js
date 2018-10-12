@@ -3,29 +3,19 @@ var express = require("express");
 var router = express.Router();
 var db = require("../models");
 
+//-----------------------ARTICLES-----------------------//
+
 // Route for displaying all saved articles from the db
 router.get("/articles/saved/", function(req, res) {
 	db.Article.find({saved: true})
 		.then(function(article) {
-			// res.json(article);
-			console.log("res" + res);
 			res.render("savedArticles", { articles: article });
 		})
 		.catch(function(err) {
-			res.json(err);
-			// throw err;
+			res.writeContinue(err);
 		});
 });
 
-// Alper's example:
-// db.Headline.findOneAndUpdate({ _id: req.params.id }, { $set: req.body }, { new: true }).then(function(dbHeadline) {
-// 	res.json(dbHeadline);
-//   });
-
-
-// I do not understand why this route is not found
-// GET /articles/saved/5bbf2d629acfbc3080212e92 
-// GET /articles/saved/5bbf2d629acfbc3080212e90
 
 // Route for updating the article's saved status
 router.post("/save-article/:id", function(req,res) {
@@ -44,30 +34,30 @@ router.post("/save-article/:id", function(req,res) {
 			// res.redirect("/");
 		}) 
 		.catch(function(err) {
-			console.log("err" + err);
 			res.writeContinue(err);
-			// res.json(err);
 		});
 });
   
-// Route for grabbing a specific Article by id, populate it with it's note
-router.get("/articles/:id", function(req, res) {
-	// Find one article using the req.params.id,
-	// and run the populate method with "note",
-	// then responds with the article with the note included
-	db.Article.findOne(
+//delete route to remove a single article from savedArticles
+router.post("/delete-from-saved/:id", function(req,res){
+	db.Article.findOneAndUpdate(
 		{
-			// Using the id in the url
 			_id: req.params.id
+		},
+		{	
+			$set: {saved: false}
 		})
-		.populate("note")
-		.then(function(dbArticle) {
-			res.json(dbArticle); 
-		})
+		.then(function(response) {
+			// res.json(dbArticle);
+			// Rerender saved articles
+			res.redirect("/articles/saved/"); // Do not understand why this takes you back to the Home page rather than saved articles
+		}) 
 		.catch(function(err) {
-			res.json(err);
-		});
+			res.writeContinue(err);
+		});  
 });
+
+//------------------------NOTES------------------------//
 
 // Route for saving/updating an Article's associated Note
 router.post("add-note/:id", function(req, res) {
@@ -91,19 +81,8 @@ router.post("add-note/:id", function(req, res) {
 			res.json(dbArticle);
 		})
 		.catch(function(err) {
-			res.json(err);
+			res.writeContinue(err);
 		});
-});
-
-//delete route to remove a single article from savedArticles
-router.delete("/deleteArticle/:id", function(req,res){
-	db.Article.remove({_id: req.params.id})
-		.then(function(dbArticle) {
-			res.json(dbArticle);
-		}) 
-		.catch(function(err) {
-			res.json(err);
-		});  
 });
 
 module.exports = router;
