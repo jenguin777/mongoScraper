@@ -86,10 +86,10 @@ $(document).ready(function() {
 		$.ajax({
 			type: "POST",
 			dataType: "json",
-			url: "/articles/save-note/" + thisId,
+			url: "/articles/" + thisId,
 			data: {
-				title: $("#noteTitleInput").val(),
-				note: $("#noteBodyInput").val(),
+				noteTitle: $("#noteTitleInput").val(),
+				noteBody: $("#noteBodyInput").val(),
 				createDate: Date.now()
 			}
 		})

@@ -15,31 +15,6 @@
 
     <br>
 
-    <!-- Notes Modal -->
-   
-        <div id="notesModal" class="modal fade" role="dialog">
-            <div class="modal-dialog modal-md" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title text-center">Add a note</h4>
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    </div>
-                    <div class="modal-body">
-                        <input type="text" id="noteTitleEntry" class="noteTitleInput" placeholder="Enter Title">
-                        <input type="text" id="noteBodyEntry" class="noteBodyInput" placeholder="Enter Body">
-                        <div id="noteArea">
-                             <h4>{{this.title}}</h4>
-                             <p>{{this.body}}</p>
-                        </div>
-                    </div> 
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary save-note" data-id="{{this._id}}">Save Note</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-   
     {{#each articles}}
         <div class="card">
             <div class="card-header">
@@ -58,4 +33,30 @@
                 <p class="card-text">{{this.teaser}}</p>
             </div>
         </div>
+
+<!-- Notes Modal -->
+   
+        <div id="notesModal" class="modal fade" role="dialog">
+            <div class="modal-dialog modal-md" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title text-center">Add a note</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="text" id="noteTitleEntry" class="noteTitleInput" placeholder="Enter Title">
+                        <input type="text" id="noteBodyEntry" class="noteBodyInput" placeholder="Enter Body">
+                        <div id="noteArea">
+                             <h4></h4>
+                             <p></p>
+                        </div>
+                    </div> 
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary save-note" data-id="{{this._id}}">Save Note</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     {{/each}}

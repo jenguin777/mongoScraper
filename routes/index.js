@@ -12,7 +12,7 @@ var cheerio = require("cheerio");
 
 // Route for getting 20 articles from the db - need to revisit this logic...we need to stop somewhere but this may not be the best way to handle this
 router.get("/", function(req, res) {
-	db.Article.find({}).sort({created: -1}).limit(20).populate("note")
+	db.Article.find({}).sort({created: -1}).limit(20)
 		.then(function(article) {
 			res.render("index", { articles: article });
 		})
@@ -106,6 +106,5 @@ router.get("/clear-articles", function(req, res) {
 		}
 	});
 });
-  
 
 module.exports = router;
