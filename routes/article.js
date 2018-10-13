@@ -64,7 +64,7 @@ router.get("/articles/:id", function (req, res) {
 
 
 // Route for saving/updating an Article's associated Note
-router.post("/articles/:id", function(req, res) {
+router.post("/save-note/:id", function(req, res) {
 	console.log("saving / updating note route - req.params.id" + req.params.id);
 	// save the new note that gets posted to the Notes collection
 	// then find an article from the req.params.id

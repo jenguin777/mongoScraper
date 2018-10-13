@@ -86,7 +86,7 @@ $(document).ready(function() {
 		$.ajax({
 			type: "POST",
 			dataType: "json",
-			url: "/articles/" + thisId,
+			url: "/articles/save-note/" + thisId,
 			data: {
 				noteTitle: $("#noteTitleInput").val(),
 				noteBody: $("#noteBodyInput").val(),
