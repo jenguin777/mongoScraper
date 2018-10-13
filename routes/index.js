@@ -62,6 +62,12 @@ router.get("/scrape", function(req, res) {
 				.children("p")
 				.text();
 
+			// This doesn't work...syntax is bad somehow, cannot see it.
+			// Only create the article if title, result, and teaser are present
+			// If (result.title && result.link && result.teaser) {
+			// 	validArticlesArray.push(newArticle);
+			// }
+
 			// Create a new Article using the `result` object built from scraping
 			db.Article.create(result)
 				.then(function(dbArticle) {
