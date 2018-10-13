@@ -57,7 +57,7 @@ router.post("/delete-from-saved/:id", function(req,res){
 //------------------------NOTES------------------------//
 
 // Route for saving/updating an Article's associated Note
-router.post("submit-note/:id", function(req, res) {
+router.post("/articles/save-note/:id", function(req, res) {
 	// save the new note that gets posted to the Notes collection
 	// then find an article from the req.params.id
 	// and update it's "note" property with the _id of the new note
@@ -68,7 +68,10 @@ router.post("submit-note/:id", function(req, res) {
 					_id: req.params.id
 				},
 				{
-					note: dbNote._id
+					note: req.params.note
+				},
+				{
+					createDate: req.params.createDate
 				});
 		})
 		.then(function(dbArticle){
