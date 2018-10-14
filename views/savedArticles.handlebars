@@ -18,10 +18,10 @@
     {{#each articles}}
         <div class="card">
             <div class="card-header">
-                 <h3><a class="article-link" target="_blank" rel="noopener noreferrer" href="{{this.link}}">{{this.title}}</a>
+                 <h6><a class="article-link" target="_blank" rel="noopener noreferrer" href="{{this.link}}">{{this.title}}</a>
 
                 {{#unless saved}}
-                <a class="btn mt-auto btn-light btn-outline-dark float-right save" data-id="{{this._id}}">Save Article</a></h3>
+                <a class="btn mt-auto btn-light btn-outline-dark float-right save" data-id="{{this._id}}">Save Article</a></h6>
                 {{/unless}}
 
                 <a class="btn mt-auto btn-light btn-outline-dark float-right delete-from-saved" data-id="{{this._id}}">Unsave</a>

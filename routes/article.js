@@ -58,14 +58,14 @@ router.get("/articles/:id", function (req, res) {
 		})
 		.catch(function (err) {
 			// If an error occurred, send it to the client
-			res.json(err);
+			res.writeContinue(err);
 		});
 });
 
 
 // Route for saving/updating an Article's associated Note
 router.post("/save-note/:id", function(req, res) {
-	console.log("saving / updating note route - req.params.id" + req.params.id);
+	console.log("saving / updating note route - req.params.id: " + req.params.id);
 	// save the new note that gets posted to the Notes collection
 	// then find an article from the req.params.id
 	// and update it's "note" property with the _id of the new note
