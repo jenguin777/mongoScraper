@@ -76,7 +76,7 @@ $(document).ready(function() {
 	//-----------------------NOTES-----------------------//
 
 	// When the saveNote button is clicked
-	$("body").on("click", ".save-note", function(event) {
+	$("body").on("click", ".save-note", function() {
 		// Grab the id associated with the article from the submit button
 		var thisId = $(this).attr("data-id");
 		console.log("thisId" + thisId);
@@ -88,20 +88,42 @@ $(document).ready(function() {
 			dataType: "json",
 			url: "/articles/save-note/" + thisId,
 			data: {
-				noteTitle: $("#noteTitleInput").val(),
-				noteBody: $("#noteBodyInput").val(),
+				noteTitle: $(".noteTitleInput").val(),
+				noteBody: $(".noteBodyInput").val(),
 				createDate: Date.now()
 			}
 		})
-		// 	// If that API call succeeds, add the title and a delete button for the note to the page
 			// If that API call succeeds, add the title and a delete button for the note to the page
 			.then(function(data) {
+
+				
 				// Add the title and delete button to the #noteArea section
-				$("#results").prepend("<p class='noteArea' data-id=" + data._id + "><span class='dataTitle' data-id=" +
-					data._id + ">" + data.title + "</span><span class=delete>X</span></p>");
-				// Clear the note and title inputs on the page
-				$("#note").val("");
-				$("#title").val("");
+				// $("#noteArea").prepend("<p class='#noteArea' data-id=" + data._id + "><span class='dataTitle' data-id=" +
+				// 	data._id + ">" + data.title + "</span><span class=delete>X</span></p>");
+				
+				console.log(data);
+				// The title of the article
+				$("#note-header").append("<h6>" + data.title + "</h6>");
+				// // An input to enter a new title
+				// $("#noteArea").append("<input id='noteTitleInput' name='title' >");
+				// // A textarea to add a new note body
+				// $("#noteArea").append("<textarea id='noteBodyInput' name='body'></textarea>");
+				// // A button to submit a new note, with the id of the article saved to it
+				// $("#noteArea").append("<button data-id='" + data._id + "' id='savenote'>Save Note</button>");
+		  
+				// // If there's a note in the article
+				// if (data.note) {
+				//   // Place the title of the note in the title input
+				//   $("#titleinput").val(data.note.title);
+				//   // Place the body of the note in the body textarea
+				//   $("#bodyinput").val(data.note.body);
+				// }
+
+				
+				
+					// Clear the note and title inputs on the page
+				// $("#note").val("");
+				// $("#title").val("");
 			});
 	});			
 });
