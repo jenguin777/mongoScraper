@@ -46,9 +46,11 @@
                     <div class="modal-body">
                         <input type="text" id="noteTitleEntry" class="noteTitleInput" placeholder="Enter Title">
                         <input type="text" id="noteBodyEntry" class="noteBodyInput" placeholder="Enter Body">
+                        {{#note}}
                         <div id="noteArea">
-        
+                            <p>{{this.noteTitle}}</p><p>{{this.noteBody}}</p>
                         </div>
+                        {{/note}}
                     </div> 
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
