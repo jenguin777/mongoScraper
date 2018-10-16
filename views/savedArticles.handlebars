@@ -26,7 +26,6 @@
 
                 <a class="btn mt-auto btn-light btn-outline-dark float-right delete-from-saved" data-id="{{this._id}}">Unsave</a>
                 
-                {{!-- Unable to add data-id="{{this._id}} to the Article Notes button...when I add it the modal no longer works --}}
                 <button type="button" data-title={{this.title}} data-id={{this._id}} class="btn mt-auto btn-light btn-outline-dark float-right add-note" data-toggle="modal" data-target="#notesModal{{this._id}}">Article Notes</button>
         
             </div>
@@ -45,8 +44,8 @@
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                     </div>
                     <div class="modal-body">
-                        <input type="text" id="noteTitleEntry" class="noteTitleInput" placeholder="Enter Title">
-                        <input type="text" id="noteBodyEntry" class="noteBodyInput" placeholder="Enter Body">
+                        <input type="text" class="noteTitleInput" placeholder="Enter Title">
+                        <input type="text" class="noteBodyInput" placeholder="Enter Body">
                         <div id="noteArea{{this._id}}">
                         </div>
                     </div> 

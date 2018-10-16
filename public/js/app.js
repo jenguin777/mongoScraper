@@ -81,9 +81,10 @@ $(document).ready(function() {
 		var id = $(this).attr('data-id');
 		$("#noteTitle" + id).text(title);
 	});
+
 	// When the saveNote button is clicked
 	$("body").on("click", ".save-note", function() {
-		// Grab the id associated with the article from the Save Note button
+		// Grab the id associated with the article from the Save Note button and put it in thisId
 		var thisId = $(this).attr("data-id");
 		console.log("thisId: " + thisId);
 
@@ -104,11 +105,15 @@ $(document).ready(function() {
 
 				// I think I may have a this / scoping problem???
 				$("#noteArea").attr("data-id",thisId);
-				// console.log(dbArticle.note.noteTitle, "This should be the note title");
-				console.log(dbArticle.note.noteTitle + "This should be the note title");
+				// Place the body of the note in the body textarea
+				$(".noteTitleInput").val(dbArticle.note.noteTitle);
+				// Place the body of the note in the body textarea
+				$(".noteBodyInput").val(dbArticle.note.noteBody);
+				
+				console.log(dbArticle.note.noteTitle + " This should be the note title");
+				console.log(JSON.stringify(dbArticle) + " This is dbArticle");
 
 				// Add the title and delete button to the #noteArea section ---// I think I may have a this / scoping problem???
-				// Also, it's only adding 1 note - when you look in the console.log from articles.js, you see that "return" only returns 1 of the notes.
 				$("#noteArea" + thisId).prepend("<p class='data-entry' data-id=" + dbArticle.note._id + "><span class='noteTitle' data-id=" +
 				dbArticle.note._id + ">" + dbArticle.note.noteTitle + " </span><span class=delete>X</span></p>");
 				// Clear the note and title inputs on the page
@@ -116,15 +121,15 @@ $(document).ready(function() {
 				// $("#noteBodyInput").val("");
 
 				// The title of the article --------------------------------I wish this would display right when you click the button------
-				$("#note-header").html("<h6>Adding note for: " + dbArticle.title + "</h6>");
+				// $("#note-header").html("<h6>Adding note for: " + dbArticle.title + "</h6>");
 		  
 				// Another approach, populate the entry fields with the last note
 				// If there's a note in the article
 				// if (data.note) {
 				  // Place the title of the note in the title input
-				//   $("#noteTitleInput").val(data.note.title);
+				//   $("#noteTitleInput").val(dbArticle.note.noteTitle);
 				  // Place the body of the note in the body textarea
-				//   $("#noteBodyInput").val(data.note.body);
+				//   $("#noteBodyInput").val(dbArticle.note.noteBody);
 				// }
 
 					// Clear the note and title inputs on the page
