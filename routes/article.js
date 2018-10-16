@@ -83,9 +83,9 @@ router.post("/save-note/:id", function(req, res) {
 				new: true
 			}).populate("note");
 		})
-		// If the Article was updated successfully, send it back to the client
+		// If the Article was updated successfully, send back article and its corresponding notes to the client
 		.then(function(dbArticle){
-			//Need to figure out how to change this so that it sends back botht he article and the notes
+			console.log("dbArticle with notes" + dbArticle);
 			res.json(dbArticle);
 		})
 		.catch(function(err) {

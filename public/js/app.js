@@ -79,7 +79,7 @@ $(document).ready(function() {
 	$("body").on("click", ".save-note", function() {
 		// Grab the id associated with the article from the Save Note button
 		var thisId = $(this).attr("data-id");
-		console.log("thisId" + thisId);
+		console.log("thisId: " + thisId);
 
 		// AJAX POST call to the submit route on the server
 		// This will take the data from the form and send it to the server
@@ -93,34 +93,31 @@ $(document).ready(function() {
 				createDate: Date.now()
 			}
 		})
-			// If that API call succeeds, add the title and a delete button for the note to the page
-			.then(function(data) {
-				console.log("data" + JSON.stringify(data));
-				// Add the title and delete button to the #noteArea section
-				// $("#noteArea").prepend("<p class='#noteArea' data-id=" + data._id + "><span class='dataTitle' data-id=" +
-				// 	data._id + ">" + data.title + "</span><span class=delete>X</span></p>");
-				
+			// If that API call succeeds, add the title and a delete button for the note to the page 
+			.then(function(dbArticle) {
+
+				// I think I may have a this / scoping problem???
 				$("#noteArea").attr("data-id",thisId);
-				
-				// The title of the article
-				$("#note-header").append("<h6>" + data.title + "</h6>");
 
+				// Add the title and delete button to the #noteArea section ---// I think I may have a this / scoping problem???
+				// Also, it's only adding 1 note - when you look in the console.log from articles.js, you see that "return" only returns 1 of the notes.
+				$("#noteArea").prepend("<p class='data-entry' data-id=" + dbArticle.note._id + "><span class='noteTitle' data-id=" +
+				dbArticle.note._id + ">" + dbArticle.note.noteTitle + "</span><span class=delete>X</span></p>");
+				// Clear the note and title inputs on the page
+				$("#noteTitleInput").val("");
+				$("#noteBodyInput").val("");
 
-				// Another approach --------------------------------
-				// // An input to enter a new title
-				// $("#noteArea").append("<input id='noteTitleInput' name='title' >");
-				// // A textarea to add a new note body
-				// $("#noteArea").append("<textarea id='noteBodyInput' name='body'></textarea>");
-				// // A button to submit a new note, with the id of the article saved to it
-				// $("#noteArea").append("<button data-id='" + data._id + "' id='savenote'>Save Note</button>");
+				// The title of the article --------------------------------I wish this would display right when you click the button------
+				$("#note-header").html("<h6>Adding note for: " + dbArticle.title + "</h6>");
 		  
+				// Another approach, populate the entry fields with the last note
 				// If there's a note in the article
-				if (data.note) {
+				// if (data.note) {
 				  // Place the title of the note in the title input
-				  $("noteTitleInput").val(data.note.title);
+				//   $("#noteTitleInput").val(data.note.title);
 				  // Place the body of the note in the body textarea
-				  $("noteBodyInput").val(data.note.body);
-				}
+				//   $("#noteBodyInput").val(data.note.body);
+				// }
 
 					// Clear the note and title inputs on the page
 				// $("#note").val("");
@@ -145,8 +142,6 @@ $(document).ready(function() {
 				// Clear the note and title inputs
 				$("#note").val("");
 				$("#title").val("");
-				// Make sure the #action-button is submit (in case it's update)
-				$("#action-button").html("<button id='make-new'>Submit</button>");
 			}
 		});
 	});
