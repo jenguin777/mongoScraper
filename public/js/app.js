@@ -102,7 +102,7 @@ $(document).ready(function() {
 				// Add the title and delete button to the #noteArea section ---// I think I may have a this / scoping problem???
 				// Also, it's only adding 1 note - when you look in the console.log from articles.js, you see that "return" only returns 1 of the notes.
 				$("#noteArea").prepend("<p class='data-entry' data-id=" + dbArticle.note._id + "><span class='noteTitle' data-id=" +
-				dbArticle.note._id + ">" + dbArticle.note.noteTitle + "</span><span class=delete>X</span></p>");
+				dbArticle.note._id + ">" + dbArticle.note.noteTitle + " </span><span class=delete>X</span></p>");
 				// Clear the note and title inputs on the page
 				$("#noteTitleInput").val("");
 				$("#noteBodyInput").val("");
@@ -132,8 +132,8 @@ $(document).ready(function() {
 		// Make an AJAX GET request to delete the specific note
 		// this uses the data-id of the p-tag, which is linked to the specific note
 		$.ajax({
-			type: "GET",
-			url: "/delete/" + selected.attr("data-id"),
+			type: "PUT",
+			url: "/articles/delete/" + selected.attr("data-id"),
 		
 			// On successful call
 			success: function(response) {
