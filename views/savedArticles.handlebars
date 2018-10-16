@@ -27,7 +27,7 @@
                 <a class="btn mt-auto btn-light btn-outline-dark float-right delete-from-saved" data-id="{{this._id}}">Unsave</a>
                 
                 {{!-- Unable to add data-id="{{this._id}} to the Article Notes button...when I add it the modal no longer works --}}
-                <button type="button" class="btn mt-auto btn-light btn-outline-dark float-right add-note" data-toggle="modal" data-target="#notesModal">Article Notes</button>
+                <button type="button" data-title={{this.title}} data-id={{this._id}} class="btn mt-auto btn-light btn-outline-dark float-right add-note" data-toggle="modal" data-target="#notesModal{{this._id}}">Article Notes</button>
         
             </div>
             <div class="card-body flex-column">
@@ -37,24 +37,18 @@
 
 <!-- Notes Modal -->
    
-        <div id="notesModal" class="modal fade" role="dialog">
+        <div id="notesModal{{this._id}}" class="modal fade" role="dialog">
             <div class="modal-dialog modal-md" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title text-center" id="note-header">Add a note for:</h4>
+                        <h4 class="modal-title text-center" id="note-header">Add a note for: <span id="noteTitle{{this._id}}"></span></h4>
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                     </div>
                     <div class="modal-body">
                         <input type="text" id="noteTitleEntry" class="noteTitleInput" placeholder="Enter Title">
                         <input type="text" id="noteBodyEntry" class="noteBodyInput" placeholder="Enter Body">
-                        {{!-- {{#each notes}} --}}
-                        {{#note}}
-                        <div id="noteArea">
-                            {{!-- <p>{{this.noteTitle}}: {{this.noteBody}}</p> --}}
-
+                        <div id="noteArea{{this._id}}">
                         </div>
-                        {{/note}}
-                        {{!-- {{/each}} --}}
                     </div> 
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
