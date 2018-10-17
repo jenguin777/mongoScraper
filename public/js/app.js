@@ -81,9 +81,11 @@ $(document).ready(function() {
 	// Article Notes event handler - show the title of the article you are adding a note to in the modal
 	$(document).on('click', '.add-note', function(){
 		event.preventDefault();
-		var title = $(this).attr('data-title');
-		var id = $(this).attr('data-id');
-		$("#noteTitle" + id).text(title);
+		var title = $(this).attr("data-title");
+		console.log(title);
+		var id = $(this).attr("data-id");
+		$("#noteTitle" + id).text(title); // this returns only the first word - have tried several variations of escaping and combinations of quotes
+		//https://stackoverflow.com/questions/26848247/variable-from-attribute-only-displays-the-first-word
 	});
 
 	// When the saveNote button is clicked
@@ -116,8 +118,7 @@ $(document).ready(function() {
 				console.log("newNoteTitle: " + JSON.stringify(newNoteTitle));
 				var newNoteBody = dbArticle.note[dbArticle.note.length-1].noteBody;
 				console.log("newNoteBody: " + JSON.stringify(newNoteBody));
-
-				// I think I may have a this / scoping problem???
+				
 				$("#noteArea").attr("data-id",thisId);
 				// Place the body of the note in the body textarea
 				$(".noteTitleInput").val(dbArticle.note[dbArticle.note.length-1].noteTitle);
@@ -133,11 +134,11 @@ $(document).ready(function() {
 				// $("#noteArea" + thisId).prepend("<p class='data-entry' data-id=" + dbArticle.note._id + "><span class='noteTitle' data-id=" +
 				// dbArticle.note._id + ">" + dbArticle.note.noteTitle + " </span><span class=delete>X</span></p>");
 
-				$("#noteArea" + thisId).prepend("<p class='data-entry' data-id=" + newNoteId + "><span class='noteTitle' data-id=" +
-				newNoteId + ">" + dbArticle.note.noteTitle + " </span><span class=delete>X</span></p>");
+				$("#noteArea" + thisId).prepend("<p class='data-entry' data-id=" + dbArticle.note[dbArticle.note.length-1]._id + "><span class='noteTitle' data-id=" +
+				dbArticle.note[dbArticle.note.length-1]._id + ">" + dbArticle.note[dbArticle.note.length-1].noteTitle + " </span><span class=delete>X</span></p>");
 				// Clear the note and title inputs on the page
-				// $("#noteTitleInput").val("");
-				// $("#noteBodyInput").val("");
+				$("#noteTitleInput").val("");
+				$("#noteBodyInput").val("");
 
 			});
 	});
@@ -145,7 +146,7 @@ $(document).ready(function() {
 	$(document).on("click", ".delete", function() {
 		event.preventDefault();
 		var thisId = $(this).attr("data-id");
-		console.log("thisID: " + thisId);
+		console.log("Delete on click event - thisID: " + thisId);
 		
 		// Make an AJAX GET request to delete the specific note
 		// this uses the data-id of the p-tag, which is linked to the specific note
