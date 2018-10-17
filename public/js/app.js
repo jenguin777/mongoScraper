@@ -137,8 +137,8 @@ $(document).ready(function() {
 				$("#noteArea" + thisId).prepend("<p class='data-entry' data-id=" + dbArticle.note[dbArticle.note.length-1]._id + "><span class='noteTitle' data-id=" +
 				dbArticle.note[dbArticle.note.length-1]._id + ">" + dbArticle.note[dbArticle.note.length-1].noteTitle + " </span><span class=delete>X</span></p>");
 				// Clear the note and title inputs on the page
-				$("#noteTitleInput").val("");
-				$("#noteBodyInput").val("");
+				$(".noteTitleInput").val("");
+				$(".noteBodyInput").val("");
 
 			});
 	});
