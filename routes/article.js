@@ -94,27 +94,29 @@ router.post("/save-note/:id", function(req, res) {
 });
 
 // Delete One from the DB
-// router.put("/delete/:id", function(req, res) {
-// 	// Remove a note using the objectID
-// 	db.Note.findOneAndRemove(
-// 		{
-// 			_id: req.params.id
-// 		},
-// 		function(error, removed) {
-// 		// Log any errors from mongojs
-// 			if (error) {
-// 				console.log(error);
-// 				res.writeContinue(error);
-// 			}
-// 			else {
-// 				// Otherwise, send the mongojs response to the browser
-// 				// This will fire off the success function of the ajax request
-// 				console.log(removed);
-// 				res.send(removed);
-// 			}
-// 		}
-// 	);
-// });
+router.get("/delete/:id", function(req, res) {
+
+	console.log("Delete route on server side has been hit");
+	// Remove a note using the objectID
+	// db.Note.findOneAndRemove(
+	// 	{
+	// 		_id: req.params.id
+	// 	},
+	// 	function(error, removed) {
+	// 	// Log any errors from mongojs
+	// 		if (error) {
+	// 			console.log(error);
+	// 			res.writeContinue(error);
+	// 		}
+	// 		else {
+	// 			// Otherwise, send the mongojs response to the browser
+	// 			// This will fire off the success function of the ajax request
+	// 			console.log(removed);
+	// 			res.send(removed);
+	// 		}
+	// 	}
+	// );
+});
   
 
 module.exports = router;
