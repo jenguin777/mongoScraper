@@ -63,7 +63,7 @@ $(document).ready(function() {
 	// When the #clear-articles button is pressed
 	$("#clear-articles").on("click", function(event) {
 		event.preventDefault();
-	// Make an AJAX GET request to delete the articles from the db
+		// Make an AJAX GET request to delete the articles from the db
 		$.ajax({
 			type: "GET",
 			dataType: "json",
@@ -81,10 +81,11 @@ $(document).ready(function() {
 	// Article Notes event handler - show the title of the article you are adding a note to in the modal
 	$(document).on('click', '.add-note', function(){
 		event.preventDefault();
-		var title = $(this).attr("data-title");
+		// var title = $(this).attr("data-title");
+		var title = $(this).data("title");
 		console.log(title);
 		var id = $(this).attr("data-id");
-		$("#noteTitle" + id).text(title); // this returns only the first word - have tried several variations of escaping and combinations of quotes
+		$("#articleTitle" + id).text(title); // this returns only the first word - have tried several variations of escaping and combinations of quotes
 		//https://stackoverflow.com/questions/26848247/variable-from-attribute-only-displays-the-first-word
 	});
 
@@ -142,6 +143,7 @@ $(document).ready(function() {
 
 			});
 	});
+
 	// When user clicks the delete button for a note
 	$(document).on("click", ".delete", function() {
 		event.preventDefault();
@@ -164,4 +166,5 @@ $(document).ready(function() {
 		// 	}
 		// });
 	});
+
 });
