@@ -103,8 +103,8 @@ $(document).ready(function() {
 			dataType: "json",
 			url: "/articles/save-note/" + thisId,
 			data: {
-				noteTitle: $(".noteTitleInput").val(),
-				noteBody: $(".noteBodyInput").val(),
+				noteTitle: $(`#noteTitleInput${thisId}`).val(),
+				noteBody: $(`#noteBodyInput${thisId}`).val(),
 				createDate: Date.now()
 			}
 		})

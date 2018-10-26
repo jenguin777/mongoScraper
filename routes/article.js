@@ -86,7 +86,7 @@ router.post("/save-note/:id", function(req, res) {
 		// If the Article was updated successfully, send back article and its corresponding notes to the client
 		.then(function(dbArticle){
 			console.log("dbArticle with notes" + dbArticle);
-			res.json(dbArticle);
+			res.redirect("back");
 		})
 		.catch(function(err) {
 			res.writeContinue(err);
