@@ -86,7 +86,7 @@ router.post("/save-note/:id", function(req, res) {
 		// If the Article was updated successfully, send back article and its corresponding notes to the client
 		.then(function(dbArticle){
 			console.log("dbArticle with notes" + dbArticle);
-			res.redirect("back");
+			res.json({success: true});
 		})
 		.catch(function(err) {
 			res.writeContinue(err);
@@ -94,28 +94,28 @@ router.post("/save-note/:id", function(req, res) {
 });
 
 // Delete One from the DB
-router.get("/delete/:id", function(req, res) {
+// router.get("/delete/:id", function(req, res) {
+router.post("/delete/:id", function(req, res) {
 
 	console.log("Delete route on server side has been hit");
-	// Remove a note using the objectID
-	// db.Note.findOneAndRemove(
-	// 	{
-	// 		_id: req.params.id
-	// 	},
-	// 	function(error, removed) {
-	// 	// Log any errors from mongojs
-	// 		if (error) {
-	// 			console.log(error);
-	// 			res.writeContinue(error);
-	// 		}
-	// 		else {
-	// 			// Otherwise, send the mongojs response to the browser
-	// 			// This will fire off the success function of the ajax request
-	// 			console.log(removed);
-	// 			res.send(removed);
-	// 		}
-	// 	}
-	// );
+	
+	console.log("req.params.id: " + req.params.id);
+	db.Note.findByIdAndRemove({ _id: req.params.id })
+		.then(function(dbNote) {
+			return db.Article.findOneAndUpdate({
+				"note": req.params.id 
+			}, { 
+				"$pull": { "note": req.params.id } 
+			});
+		})
+		.then(function(dbArticle) {
+			console.log("dbArticle with notes " + dbArticle);
+			res.redirect("back");
+		})
+		.catch(function(err) {
+			res.writeContinue(err);
+		});
+
 });
   
 

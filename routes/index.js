@@ -25,7 +25,8 @@ router.get("/", function(req, res) {
 router.get("/articles/saved/", function(req, res) {
 	db.Article.find({saved: true}).sort({created: -1}).limit(20).populate("note")
 		.then(function(article) {
-			
+			// var hbsObject = { articles: article };
+			// res.render("index", hbsObject);
 			res.render("savedArticles", { articles: article });
 		})
 		.catch(function(err) {

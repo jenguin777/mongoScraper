@@ -51,7 +51,8 @@
                         <div id="noteArea{{this._id}}">
                             <div class="row">
                                  {{debug}}
-                                <p>{{this.noteTitle}}</p><span> <p>{{this.noteBody}}</p></span><span class=delete>X</span>
+                                <p>{{this.noteTitle}}</p><span> <p>{{this.noteBody}}</p></span>
+                                <button class="btn btn-danger btn-small note-delete" id="{{this._id}}">X</button>
                             </div>
                         </div>
                         {{/each}}

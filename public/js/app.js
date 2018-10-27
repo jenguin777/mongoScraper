@@ -22,7 +22,8 @@ $(document).ready(function() {
 			url: "/scrape/",
 			type: "GET",
 			success: function (response) {
-				window.location.href = "/articles/saved/";
+				// window.location.href = "/articles/saved/";
+				location.reload();
 			}
 		});
 	});
@@ -71,7 +72,8 @@ $(document).ready(function() {
 			// On a successful call, clear the #results section
 			success: function(response) {
 				$("#results").empty();
-				window.location.href = "/";
+				// window.location.href = "/";
+				location.reload();
 			}
 		});
 	});
@@ -90,7 +92,7 @@ $(document).ready(function() {
 	});
 
 	// When the saveNote button is clicked
-	$("body").on("click", ".save-note", function() {
+	$("body").on("click", ".save-note", function(event) {
 		event.preventDefault();
 		// Grab the id associated with the article from the Save Note button and put it in thisId
 		var thisId = $(this).attr("data-id");
@@ -110,61 +112,30 @@ $(document).ready(function() {
 		})
 			// If that API call succeeds, add the title and a delete button for the note to the page 
 			.then(function(dbArticle) {
-				console.log("dbArticle with notes from client side: " + JSON.stringify(dbArticle));
-				console.log("last dbArticle in array: " + JSON.stringify(dbArticle.note[dbArticle.note.length-1]));
-
-				var newNoteId = dbArticle.note[dbArticle.note.length-1]._id;
-				console.log("newNoteId: " + JSON.stringify(newNoteId));
-				var newNoteTitle = dbArticle.note[dbArticle.note.length-1].noteTitle;
-				console.log("newNoteTitle: " + JSON.stringify(newNoteTitle));
-				var newNoteBody = dbArticle.note[dbArticle.note.length-1].noteBody;
-				console.log("newNoteBody: " + JSON.stringify(newNoteBody));
-				
-				$("#noteArea").attr("data-id",thisId);
-				// Place the body of the note in the body textarea
-				$(".noteTitleInput").val(dbArticle.note[dbArticle.note.length-1].noteTitle);
-				// Place the body of the note in the body textarea
-				$(".noteBodyInput").val(dbArticle.note[dbArticle.note.length-1].noteBody);
-				
-
-				// Add the title and delete button to the #noteArea section
-
-				// Add the title and delete button to the #noteArea section
-
-				// This at least displays Undefined with the X:
-				// $("#noteArea" + thisId).prepend("<p class='data-entry' data-id=" + dbArticle.note._id + "><span class='noteTitle' data-id=" +
-				// dbArticle.note._id + ">" + dbArticle.note.noteTitle + " </span><span class=delete>X</span></p>");
-
-				$("#noteArea" + thisId).prepend("<p class='data-entry' data-id=" + dbArticle.note[dbArticle.note.length-1]._id + "><span class='noteTitle' data-id=" +
-				dbArticle.note[dbArticle.note.length-1]._id + ">" + dbArticle.note[dbArticle.note.length-1].noteTitle + " </span><span class=delete>X</span></p>");
-				// Clear the note and title inputs on the page
-				$(".noteTitleInput").val("");
-				$(".noteBodyInput").val("");
+				location.reload();
+				// window.location.href = "/articles/saved/";
 
 			});
 	});
 
 	// When user clicks the delete button for a note
-	$(document).on("click", ".delete", function() {
+	$("body").on("click", ".note-delete", function(event) {
 		event.preventDefault();
-		var thisId = $(this).attr("data-id");
+		// var thisId = $(this).attr("data-id");
+		var thisId = $(event.target).attr("id");
 		console.log("Delete on click event - thisID: " + thisId);
 		
 		// Make an AJAX GET request to delete the specific note
-		// this uses the data-id of the p-tag, which is linked to the specific note
-		// $.ajax({
-		// 	type: "GET",
-		// 	url: "/articles/delete/" + thisId,
-		
-		// 	// On successful call
-		// 	success: function(response) {
-		// 		// Remove the p-tag from the DOM
-		// 		selected.remove();
-		// 		// Clear the note and title inputs
-		// 		$("noteTitleInput").val("");
-		// 		$("noteBodyInput").val("");
-		// 	}
-		// });
+		$.ajax({
+			// type: "GET",
+			type: "POST",
+			url: "/articles/delete/" + thisId,
+			// url: "/delete/" + thisId,
+		}).then(
+			function(data) {
+				console.log("data" + data);
+				location.reload();
+			}
+		);
 	});
-
 });
