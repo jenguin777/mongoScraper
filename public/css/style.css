@@ -38,4 +38,18 @@
     margin-right: 14px;
   }
 
+  #note-title {
+    margin-left: 17px;
+    margin-right: 125px;
+    width: 100px;
+  }
+
+  #note-body {
+    width: 400px;
+  }
+
+  .btn-sm {
+    height: 38px;
+  }
+
   
