@@ -40,12 +40,11 @@
 
   #note-title {
     margin-left: 17px;
-    margin-right: 125px;
-    width: 100px;
+    width: 222px;
   }
 
   #note-body {
-    width: 400px;
+    width: 450px;
   }
 
   .btn-sm {
